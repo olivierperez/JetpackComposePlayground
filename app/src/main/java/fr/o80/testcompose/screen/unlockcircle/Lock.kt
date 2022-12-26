@@ -44,6 +44,14 @@ fun Lock(
         }
     }
 
+    val lockColor = LocalLockTheme.current.lockColor
+    val backgroundLockColor = LocalLockTheme.current.backgroundLockColor
+    val keyColor = LocalLockTheme.current.keyColor
+    val strokeWidthDp = LocalLockTheme.current.strokeWidth.dp
+    val lockRadiusDp = LocalLockTheme.current.lockRadius.dp
+    val keyRadiusDp = LocalLockTheme.current.keyRadius.dp
+    val marginDp = LocalLockTheme.current.margin.dp
+
     Canvas(
         modifier.pointerInput(Unit) {
             this.detectTapGestures(
@@ -53,11 +61,11 @@ fun Lock(
             )
         }
     ) {
-        val strokeWidth = size.minDimension / 50
-        val smallCircleRadius = size.minDimension / 15
-        val keyRadius = size.minDimension / 25
-        val margin = size.minDimension / 20 + smallCircleRadius
-        val bigCircleRadius = (size.minDimension / 2f) - margin
+        val strokeWidth = strokeWidthDp.toPx()
+        val smallCircleRadius = lockRadiusDp.toPx()
+        val keyRadius = keyRadiusDp.toPx()
+        val margin = marginDp.toPx()
+        val bigCircleRadius = (size.minDimension-strokeWidth) / 2f - smallCircleRadius - margin
 
         drawCircle(
             Color.Red,
@@ -65,9 +73,13 @@ fun Lock(
             style = Stroke(width = strokeWidth)
         )
         remainingLocks.locks.forEach { position ->
-            drawLockPosition(position, smallCircleRadius, bigCircleRadius, strokeWidth)
+            drawLockPosition(
+                position, smallCircleRadius, bigCircleRadius, strokeWidth,
+                lockColor,
+                backgroundLockColor
+            )
         }
-        drawKey({ keyPosition }, keyRadius, bigCircleRadius)
+        drawKey({ keyPosition }, keyRadius, bigCircleRadius, keyColor)
     }
 }
 
@@ -87,11 +99,12 @@ fun rememberKeyPosition(): State<Float> {
 private fun DrawScope.drawKey(
     keyPosition: () -> Float,
     keyRadius: Float,
-    bigCircleRadius: Float
+    bigCircleRadius: Float,
+    keyColor: Color
 ) {
     rotate(keyPosition()) {
         drawCircle(
-            Color(0xFFFFC107),
+            keyColor,
             radius = keyRadius,
             style = Fill,
             center = center.minus(Offset(0f, bigCircleRadius))
@@ -103,18 +116,20 @@ private fun DrawScope.drawLockPosition(
     position: Float,
     smallCircleRadius: Float,
     bigCircleRadius: Float,
-    strokeWidth: Float
+    strokeWidth: Float,
+    lockColor: Color,
+    backgroundLockColor: Color
 ) {
     rotate(position) {
         drawCircle(
-            Color(0x22FF0000),
+            backgroundLockColor,
             radius = smallCircleRadius,
             style = Fill,
             center = center.minus(Offset(0f, bigCircleRadius)),
             blendMode = BlendMode.Src
         )
         drawCircle(
-            Color(0xFFFF0000),
+            lockColor,
             radius = smallCircleRadius,
             style = Stroke(width = strokeWidth),
             center = center.minus(Offset(0f, bigCircleRadius))
