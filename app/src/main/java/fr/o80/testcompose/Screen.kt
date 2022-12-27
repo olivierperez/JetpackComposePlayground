@@ -2,6 +2,7 @@ package fr.o80.testcompose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import fr.o80.testcompose.screen.appearingtopbar.AppearingTopBar
 import fr.o80.testcompose.screen.unlockcircle.UnlockCircle
 
 enum class Screen(
@@ -11,5 +12,9 @@ enum class Screen(
     LOCK_CIRCLE(
         label = "Lock Circle",
         render = { modifier, onClose -> UnlockCircle(modifier, onClose) }
+    ),
+    APPEARING_TOP_BAR(
+        label = "Appearing top bar",
+        render = { modifier, onClose -> AppearingTopBar(modifier, onClose) }
     )
 }
