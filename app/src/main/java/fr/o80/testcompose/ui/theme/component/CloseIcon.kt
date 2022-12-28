@@ -10,8 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CloseIcon(onClick: () -> Unit) {
-    IconButton(onClick = onClick, modifier = Modifier.size(64.dp)) {
+fun CloseIcon(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(onClick = onClick, modifier = modifier.size(64.dp)) {
         Icon(Icons.Default.Close, contentDescription = "Close")
     }
 }
