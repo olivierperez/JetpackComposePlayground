@@ -1,10 +1,11 @@
-package fr.o80.testcompose
+package fr.o80.testcompose.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -17,15 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import fr.o80.testcompose.Screen
 import fr.o80.testcompose.ui.theme.TestComposeCanvasTheme
-
 
 @Composable
 fun ScreenList(
     modifier: Modifier,
     onScreenSelect: (Screen) -> Unit
 ) {
-    LazyColumn(modifier = modifier) {
+    LazyColumn(modifier = modifier.systemBarsPadding()) {
         item {
             Text(
                 modifier = Modifier.padding(16.dp),

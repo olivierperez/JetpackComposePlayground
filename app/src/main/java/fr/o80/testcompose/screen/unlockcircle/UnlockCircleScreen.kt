@@ -3,6 +3,7 @@ package fr.o80.testcompose.screen.unlockcircle
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,11 +19,11 @@ import fr.o80.testcompose.ui.theme.component.CloseIcon
 import kotlin.random.Random
 
 @Composable
-fun UnlockCircle(
+fun UnlockCircleScreen(
     modifier: Modifier,
     onClose: () -> Unit
 ) {
-    Box(modifier) {
+    Box(modifier.systemBarsPadding()) {
         var finished by remember { mutableStateOf(false) }
         if (finished) {
             Text(
@@ -48,7 +49,7 @@ fun UnlockCircle(
 @Composable
 fun UnlockCirclePreview() {
     TestComposeCanvasTheme {
-        UnlockCircle(
+        UnlockCircleScreen(
             Modifier.fillMaxSize(),
             onClose = {}
         )

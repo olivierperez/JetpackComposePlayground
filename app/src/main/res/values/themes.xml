@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.TestComposeCanvas" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.TestComposeCanvas" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">#FF1C1B1F</item>
+        <item name="android:statusBarColor">#FF1C1B1F</item>
+        <item name="android:navigationBarColor">#FF1C1B1F</item>
+    </style>
 </resources>

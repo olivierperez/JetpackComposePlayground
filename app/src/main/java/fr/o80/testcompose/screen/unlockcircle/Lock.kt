@@ -65,7 +65,7 @@ fun Lock(
         val smallCircleRadius = lockRadiusDp.toPx()
         val keyRadius = keyRadiusDp.toPx()
         val margin = marginDp.toPx()
-        val bigCircleRadius = (size.minDimension-strokeWidth) / 2f - smallCircleRadius - margin
+        val bigCircleRadius = (size.minDimension - strokeWidth) / 2f - smallCircleRadius - margin
 
         drawCircle(
             Color.Red,

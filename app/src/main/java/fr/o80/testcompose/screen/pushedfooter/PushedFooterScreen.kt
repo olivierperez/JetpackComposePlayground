@@ -3,6 +3,7 @@ package fr.o80.testcompose.screen.pushedfooter
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,14 +22,14 @@ import fr.o80.testcompose.ui.theme.component.CloseIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PushedFooter(
+fun PushedFooterScreen(
     modifier: Modifier,
     onClose: () -> Unit
 ) {
     val listItems by remember { mutableStateOf(ListItems()) }
 
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.systemBarsPadding(),
         verticalArrangement = HeaderFooterArrangement
     ) {
         item(contentType = "Header") {

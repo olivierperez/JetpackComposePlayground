@@ -2,10 +2,13 @@ package fr.o80.testcompose.screen.appearingtopbar
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -27,7 +30,7 @@ import fr.o80.testcompose.ui.theme.component.CloseIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppearingTopBar(
+fun AppearingAppBarScreen(
     modifier: Modifier,
     onClose: () -> Unit
 ) {
@@ -67,7 +70,8 @@ fun AppearingTopBar(
                     end = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
                     bottom = innerPadding.calculateBottomPadding()
                 ),
-            state = state
+            state = state,
+            contentPadding = WindowInsets.statusBars.asPaddingValues()
         ) {
             items(data.items) { item ->
                 Text(
