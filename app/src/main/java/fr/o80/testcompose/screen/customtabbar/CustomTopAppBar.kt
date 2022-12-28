@@ -1,9 +1,9 @@
 package fr.o80.testcompose.screen.customtabbar
 
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.Easing
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,18 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import fr.o80.testcompose.ui.theme.TestComposeCanvasTheme
 
 @ExperimentalMaterial3Api
 @Composable
-fun CustomTopTabBar(
+fun CustomTopAppBar(
     modifier: Modifier,
     maxHeight: Dp = 250.dp,
     collapsedContent: @Composable (modifier: Modifier) -> Unit,
     expandedContent: @Composable (modifier: Modifier) -> Unit,
+    alphaEasing: Easing = CubicBezierEasing(.8f, 0f, .8f, .15f),
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
     val localDensity = LocalDensity.current
@@ -43,7 +42,7 @@ fun CustomTopTabBar(
     val colorTransitionFraction by remember {
         derivedStateOf { scrollBehavior?.state?.collapsedFraction ?: 0f }
     }
-    val smallBarAlpha by remember { derivedStateOf { colorTransitionFraction } }
+    val smallBarAlpha by remember { derivedStateOf { alphaEasing.transform(colorTransitionFraction) } }
     val largeBarAlpha by remember { derivedStateOf { 1f - smallBarAlpha } }
 
     val largeHeightPx by remember {
@@ -68,19 +67,6 @@ fun CustomTopTabBar(
                             .toPx()
                     }
                 }
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
-@Composable
-fun CustomTopTabBarPreview() {
-    TestComposeCanvasTheme {
-        CustomTopTabBar(
-            modifier = Modifier.fillMaxWidth(),
-            collapsedContent = { modifier -> Text("Collapsed", modifier) },
-            expandedContent = { modifier -> Text("Expanded", modifier) }
         )
     }
 }

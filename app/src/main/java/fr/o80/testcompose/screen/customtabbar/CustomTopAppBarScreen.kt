@@ -40,7 +40,7 @@ fun CustomTopAppBarScreen(
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            CustomTopTabBar(
+            CustomTopAppBar(
                 modifier = Modifier.fillMaxWidth(),
                 collapsedContent = { modifier ->
                     TopAppBar(
