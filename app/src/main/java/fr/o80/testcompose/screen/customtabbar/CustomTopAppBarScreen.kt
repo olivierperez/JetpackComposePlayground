@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import fr.o80.testcompose.ui.theme.component.CloseIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +34,14 @@ fun CustomTopAppBarScreen(
             CustomTopTabBar(
                 modifier = Modifier.fillMaxWidth(),
                 onClose = onClose,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                collapsedContent = { modifier ->
+                    TopAppBar(
+                        modifier = modifier,
+                        title = { Text("Small Top App Bar") },
+                        navigationIcon = { CloseIcon(onClick = onClose) }
+                    )
+                }
             )
         }
     ) { paddingValues ->
