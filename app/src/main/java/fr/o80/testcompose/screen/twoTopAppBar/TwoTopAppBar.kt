@@ -1,4 +1,4 @@
-package fr.o80.testcompose.screen.customtabbar
+package fr.o80.testcompose.screen.twoTopAppBar
 
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.Easing
@@ -18,10 +18,11 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import fr.o80.testcompose.modifier.maxHeight
 
 @ExperimentalMaterial3Api
 @Composable
-fun CustomTopAppBar(
+fun TwoTopAppBar(
     modifier: Modifier,
     maxHeight: Dp = 250.dp,
     collapsedContent: @Composable (modifier: Modifier) -> Unit,
@@ -45,17 +46,11 @@ fun CustomTopAppBar(
     val smallBarAlpha by remember { derivedStateOf { alphaEasing.transform(colorTransitionFraction) } }
     val largeBarAlpha by remember { derivedStateOf { 1f - smallBarAlpha } }
 
-    val largeHeightPx by remember {
-        derivedStateOf {
-            maxHeightPx + (scrollBehavior?.state?.heightOffset ?: 0f)
-        }
-    }
-
     Box(modifier) {
         expandedContent(
             Modifier
                 .graphicsLayer { this.alpha = largeBarAlpha }
-                .maxHeight { largeHeightPx }
+                .maxHeight { maxHeightPx + (scrollBehavior?.state?.heightOffset ?: 0f) }
         )
         collapsedContent(
             Modifier

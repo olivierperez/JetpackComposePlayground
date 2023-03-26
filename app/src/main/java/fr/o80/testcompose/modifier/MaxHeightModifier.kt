@@ -1,4 +1,4 @@
-package fr.o80.testcompose.screen.customtabbar
+package fr.o80.testcompose.modifier
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier

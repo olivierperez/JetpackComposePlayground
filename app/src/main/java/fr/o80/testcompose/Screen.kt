@@ -3,8 +3,9 @@ package fr.o80.testcompose
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import fr.o80.testcompose.screen.appearingtopbar.AppearingAppBarScreen
-import fr.o80.testcompose.screen.customtabbar.CustomTopAppBarScreen
+import fr.o80.testcompose.screen.twoTopAppBar.TwoTopAppBarScreen
 import fr.o80.testcompose.screen.pushedfooter.PushedFooterScreen
+import fr.o80.testcompose.screen.singleTopAppBar.SingleTopAppBarScreen
 import fr.o80.testcompose.screen.unlockcircle.UnlockCircleScreen
 
 enum class Screen(
@@ -15,9 +16,13 @@ enum class Screen(
         label = "Appearing App Bar",
         render = { modifier, onClose -> AppearingAppBarScreen(modifier, onClose) }
     ),
-    CUSTOM_APP_BAR(
-        label = "Custom App Bar",
-        render = { modifier, onClose -> CustomTopAppBarScreen(modifier, onClose) }
+    SINGLE_TOP_APP_BAR(
+        label = "Single Top App Bar",
+        render = { modifier, onClose -> SingleTopAppBarScreen(modifier, onClose) }
+    ),
+    TWO_TOP_APP_BAR(
+        label = "Two Top App Bar",
+        render = { modifier, onClose -> TwoTopAppBarScreen(modifier, onClose) }
     ),
     LOCK_CIRCLE(
         label = "Lock Circle",

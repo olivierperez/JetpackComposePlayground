@@ -1,4 +1,4 @@
-package fr.o80.testcompose.screen.customtabbar
+package fr.o80.testcompose.screen.twoTopAppBar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -30,7 +30,7 @@ import fr.o80.testcompose.ui.theme.component.CloseIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomTopAppBarScreen(
+fun TwoTopAppBarScreen(
     modifier: Modifier,
     onClose: () -> Unit
 ) {
@@ -40,7 +40,7 @@ fun CustomTopAppBarScreen(
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            CustomTopAppBar(
+            TwoTopAppBar(
                 modifier = Modifier.fillMaxWidth(),
                 collapsedContent = { modifier ->
                     TopAppBar(
