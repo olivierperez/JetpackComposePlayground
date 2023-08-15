@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import fr.o80.testcompose.screen.appearingtopbar.AppearingAppBarScreen
 import fr.o80.testcompose.screen.twoTopAppBar.TwoTopAppBarScreen
 import fr.o80.testcompose.screen.pushedfooter.PushedFooterScreen
+import fr.o80.testcompose.screen.shaker.ShakerScreen
 import fr.o80.testcompose.screen.singleTopAppBar.SingleTopAppBarScreen
 import fr.o80.testcompose.screen.unlockcircle.UnlockCircleScreen
 
@@ -31,5 +32,9 @@ enum class Screen(
     PUSHED_FOOTER(
         label = "Pushed Footer",
         render = { modifier, onClose -> PushedFooterScreen(modifier, onClose) }
+    ),
+    SHAKER(
+        label = "Shaker",
+        render = { modifier, onClose -> ShakerScreen(modifier, onClose) }
     )
 }
