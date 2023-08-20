@@ -2,12 +2,14 @@ package fr.o80.testcompose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import fr.o80.testcompose.screen.ScreenWrapper
 import fr.o80.testcompose.screen.appearingtopbar.AppearingAppBarScreen
-import fr.o80.testcompose.screen.twoTopAppBar.TwoTopAppBarScreen
 import fr.o80.testcompose.screen.pushedfooter.PushedFooterScreen
 import fr.o80.testcompose.screen.shaker.ShakerScreen
 import fr.o80.testcompose.screen.singleTopAppBar.SingleTopAppBarScreen
+import fr.o80.testcompose.screen.twoTopAppBar.TwoTopAppBarScreen
 import fr.o80.testcompose.screen.unlockcircle.UnlockCircleScreen
+import fr.o80.testcompose.screen.wave.WavesBackground
 
 enum class Screen(
     val label: String,
@@ -36,5 +38,15 @@ enum class Screen(
     SHAKER(
         label = "Shaker",
         render = { modifier, onClose -> ShakerScreen(modifier, onClose) }
+    ),
+    WAVE_BACKGROUND(
+        label = "Wave Background",
+        render = { modifier, onClose ->
+            ScreenWrapper(
+                WAVE_BACKGROUND.label,
+                modifier,
+                onClose
+            ) { WavesBackground() }
+        }
     )
 }
