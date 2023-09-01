@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import fr.o80.testcompose.screen.ScreenWrapper
 import fr.o80.testcompose.screen.appearingtopbar.AppearingAppBarScreen
+import fr.o80.testcompose.screen.pacman.Pacmans
 import fr.o80.testcompose.screen.pushedfooter.PushedFooterScreen
 import fr.o80.testcompose.screen.shaker.ShakerScreen
 import fr.o80.testcompose.screen.singleTopAppBar.SingleTopAppBarScreen
@@ -47,6 +48,16 @@ enum class Screen(
                 modifier,
                 onClose
             ) { WavesBackground() }
+        }
+    ),
+    PACMAN(
+        label = "Pacman",
+        render = { modifier, onClose ->
+            ScreenWrapper(
+                WAVE_BACKGROUND.label,
+                modifier,
+                onClose
+            ) { Pacmans() }
         }
     )
 }
