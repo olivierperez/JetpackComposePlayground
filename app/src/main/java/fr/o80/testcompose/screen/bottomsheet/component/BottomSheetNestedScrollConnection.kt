@@ -1,4 +1,4 @@
-package fr.o80.testcompose.screen.bottomsheet
+package fr.o80.testcompose.screen.bottomsheet.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.Orientation

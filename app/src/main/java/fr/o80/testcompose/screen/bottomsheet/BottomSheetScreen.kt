@@ -1,30 +1,65 @@
 package fr.o80.testcompose.screen.bottomsheet
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import fr.o80.testcompose.screen.bottomsheet.component.BottomSheet
+import fr.o80.testcompose.screen.bottomsheet.component.behavior.HeaderFooterFirsState
+import fr.o80.testcompose.screen.bottomsheet.component.behavior.rememberHeaderFooterFirstBehavior
+import fr.o80.testcompose.screen.bottomsheet.component.rememberBottomSheetState
 import fr.o80.testcompose.ui.theme.TestComposeCanvasTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun BottomSheetScreen(
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier.fillMaxSize()) {
+        val scope = rememberCoroutineScope()
+        val state = rememberBottomSheetState(
+            behavior = rememberHeaderFooterFirstBehavior(HeaderFooterFirsState.Header),
+            onStateChanged = { println("On state changed: $it") }
+        )
 
-        val behavior = rememberHeaderFooterFirstBehavior(HeaderFooterFirsState.Header)
+        Row(
+            modifier = Modifier
+                .align(Alignment.TopCenter),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Button(onClick = {
+                scope.launch { state.scrollTo(HeaderFooterFirsState.Header) }
+            }) {
+                Text("Close")
+            }
+            Button(onClick = {
+                scope.launch { state.scrollTo(HeaderFooterFirsState.HeaderFooter) }
+            }) {
+                Text("Half")
+            }
+            Button(onClick = {
+                scope.launch { state.scrollTo(HeaderFooterFirsState.Full) }
+            }) {
+                Text("Open")
+            }
+        }
+
         BottomSheet(
             modifier = Modifier.align(Alignment.BottomCenter),
-            behavior = behavior,
+            state = state,
             header = {
                 Text(
                     "Un super titre",
