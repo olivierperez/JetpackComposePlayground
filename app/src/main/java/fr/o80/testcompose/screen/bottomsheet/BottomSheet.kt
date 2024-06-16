@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.platform.LocalDensity
@@ -55,7 +56,8 @@ fun BottomSheetLayout(
     content: @Composable () -> Unit
 ) {
     Layout(
-        modifier = modifier,
+        modifier = modifier
+            .nestedScroll(rememberBottomSheetNestedScrollConnection(behavior)),
         content = content,
         measurePolicy = { measurables, constraints ->
             assert(measurables.size == 3) {
