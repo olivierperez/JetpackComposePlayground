@@ -14,10 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.o80.testcompose.screen.bottomsheet.component.BottomSheet
+import fr.o80.testcompose.screen.bottomsheet.component.BottomSheetState
 import fr.o80.testcompose.screen.bottomsheet.component.behavior.HeaderFooterFirsState
 import fr.o80.testcompose.screen.bottomsheet.component.behavior.rememberHeaderFooterFirstBehavior
 import fr.o80.testcompose.screen.bottomsheet.component.rememberBottomSheetState
@@ -29,33 +33,15 @@ fun BottomSheetScreen(
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier.fillMaxSize()) {
-        val scope = rememberCoroutineScope()
         val state = rememberBottomSheetState(
             behavior = rememberHeaderFooterFirstBehavior(HeaderFooterFirsState.Header),
             onStateChanged = { println("On state changed: $it") }
         )
 
-        Row(
-            modifier = Modifier
-                .align(Alignment.TopCenter),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Button(onClick = {
-                scope.launch { state.scrollTo(HeaderFooterFirsState.Header) }
-            }) {
-                Text("Close")
-            }
-            Button(onClick = {
-                scope.launch { state.scrollTo(HeaderFooterFirsState.HeaderFooter) }
-            }) {
-                Text("Half")
-            }
-            Button(onClick = {
-                scope.launch { state.scrollTo(HeaderFooterFirsState.Full) }
-            }) {
-                Text("Open")
-            }
-        }
+        ControlButtons(
+            state,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
 
         BottomSheet(
             modifier = Modifier.align(Alignment.BottomCenter),
@@ -93,6 +79,65 @@ fun BottomSheetScreen(
                 )
             }
         )
+    }
+}
+
+@Composable
+private fun ControlButtons(
+    state: BottomSheetState<HeaderFooterFirsState>,
+    modifier: Modifier = Modifier,
+) {
+    val scope = rememberCoroutineScope()
+    val disableColor = MaterialTheme.colorScheme.background
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Button(
+            modifier = Modifier.drawWithContent {
+                drawContent()
+                val disableSize = size.width * state.progressBetween(
+                    HeaderFooterFirsState.HeaderFooter,
+                    HeaderFooterFirsState.Header
+                )
+                drawRect(
+                    color = disableColor.copy(alpha = .9f),
+                    size = Size(
+                        width = disableSize,
+                        height = size.height
+                    )
+                )
+            },
+            onClick = {
+                scope.launch { state.scrollTo(HeaderFooterFirsState.Header) }
+            }
+        ) {
+            Text("Close")
+        }
+        Button(onClick = {
+            scope.launch { state.scrollTo(HeaderFooterFirsState.HeaderFooter) }
+        }) {
+            Text("Half")
+        }
+        Button(
+            modifier = Modifier.drawWithContent {
+                drawContent()
+                val disableSize = size.width * state.progressBetween(
+                    HeaderFooterFirsState.HeaderFooter,
+                    HeaderFooterFirsState.Full
+                )
+                drawRect(
+                    color = disableColor.copy(alpha = .9f),
+                    topLeft = Offset(size.width - disableSize, 0f),
+                    size = Size(disableSize, size.height)
+                )
+            },
+            onClick = {
+                scope.launch { state.scrollTo(HeaderFooterFirsState.Full) }
+            }
+        ) {
+            Text("Open")
+        }
     }
 }
 
