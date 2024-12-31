@@ -22,7 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.o80.testcompose.screen.bottomsheet.component.BottomSheet
 import fr.o80.testcompose.screen.bottomsheet.component.BottomSheetState
-import fr.o80.testcompose.screen.bottomsheet.component.behavior.HeaderFooterFirsState
+import fr.o80.testcompose.screen.bottomsheet.component.behavior.HeaderFooterFirstState
+import fr.o80.testcompose.screen.bottomsheet.component.behavior.HeaderFooterFirstStateDescriptions
 import fr.o80.testcompose.screen.bottomsheet.component.behavior.rememberHeaderFooterFirstBehavior
 import fr.o80.testcompose.screen.bottomsheet.component.rememberBottomSheetState
 import fr.o80.testcompose.ui.theme.TestComposeCanvasTheme
@@ -34,7 +35,14 @@ fun BottomSheetScreen(
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         val state = rememberBottomSheetState(
-            behavior = rememberHeaderFooterFirstBehavior(HeaderFooterFirsState.Header),
+            behavior = rememberHeaderFooterFirstBehavior(
+                initialState = HeaderFooterFirstState.Header,
+                stateDescriptions = HeaderFooterFirstStateDescriptions(
+                    header = "Collapsed",
+                    headerFooter = "Half expanded",
+                    full = "Expanded"
+                )
+            ),
             onStateChanged = { println("On state changed: $it") }
         )
 
@@ -46,6 +54,7 @@ fun BottomSheetScreen(
         BottomSheet(
             modifier = Modifier.align(Alignment.BottomCenter),
             state = state,
+            paneTitle = "La fiche du bas",
             header = {
                 Text(
                     "Un super titre",
@@ -58,7 +67,7 @@ fun BottomSheetScreen(
             },
             content = {
                 Text(
-                    "Puis un texte normal sans pression, t'as vu ?\nEt ça peut\nse trouve sur plusieurs lignes\npour prendre beaucoup de place.\nNon ?",
+                    "Puis un texte normal sans pression, t'as vu ?\nEt ça peut\nse trouver sur plusieurs lignes\npour prendre beaucoup de place.\nNon ?",
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.inversePrimary,
                     modifier = Modifier
@@ -84,7 +93,7 @@ fun BottomSheetScreen(
 
 @Composable
 private fun ControlButtons(
-    state: BottomSheetState<HeaderFooterFirsState>,
+    state: BottomSheetState<HeaderFooterFirstState>,
     modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
@@ -97,8 +106,8 @@ private fun ControlButtons(
             modifier = Modifier.drawWithContent {
                 drawContent()
                 val disableSize = size.width * state.progressBetween(
-                    HeaderFooterFirsState.HeaderFooter,
-                    HeaderFooterFirsState.Header
+                    HeaderFooterFirstState.HeaderFooter,
+                    HeaderFooterFirstState.Header
                 )
                 drawRect(
                     color = disableColor.copy(alpha = .9f),
@@ -109,13 +118,13 @@ private fun ControlButtons(
                 )
             },
             onClick = {
-                scope.launch { state.scrollTo(HeaderFooterFirsState.Header) }
+                scope.launch { state.scrollTo(HeaderFooterFirstState.Header) }
             }
         ) {
             Text("Close")
         }
         Button(onClick = {
-            scope.launch { state.scrollTo(HeaderFooterFirsState.HeaderFooter) }
+            scope.launch { state.scrollTo(HeaderFooterFirstState.HeaderFooter) }
         }) {
             Text("Half")
         }
@@ -123,8 +132,8 @@ private fun ControlButtons(
             modifier = Modifier.drawWithContent {
                 drawContent()
                 val disableSize = size.width * state.progressBetween(
-                    HeaderFooterFirsState.HeaderFooter,
-                    HeaderFooterFirsState.Full
+                    HeaderFooterFirstState.HeaderFooter,
+                    HeaderFooterFirstState.Full
                 )
                 drawRect(
                     color = disableColor.copy(alpha = .9f),
@@ -133,7 +142,7 @@ private fun ControlButtons(
                 )
             },
             onClick = {
-                scope.launch { state.scrollTo(HeaderFooterFirsState.Full) }
+                scope.launch { state.scrollTo(HeaderFooterFirstState.Full) }
             }
         ) {
             Text("Open")
