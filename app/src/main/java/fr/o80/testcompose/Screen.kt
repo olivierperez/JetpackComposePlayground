@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import fr.o80.testcompose.screen.ScreenWrapper
 import fr.o80.testcompose.screen.appearingtopbar.AppearingAppBarScreen
+import fr.o80.testcompose.screen.bottombar.BottomBarScreen
 import fr.o80.testcompose.screen.bottomsheet.BottomSheetScreen
 import fr.o80.testcompose.screen.pacman.Pacmans
 import fr.o80.testcompose.screen.pushedfooter.PushedFooterScreen
@@ -74,6 +75,16 @@ enum class Screen(
                 modifier,
                 onClose
             ) { BottomSheetScreen() }
+        }
+    ),
+    BOTTOM_BAR(
+        label = "Bottom Bar",
+        rendering = {modifier, onClose ->
+            ScreenWrapper(
+                BOTTOM_BAR.label,
+                modifier,
+                onClose
+            ) { BottomBarScreen() }
         }
     )
 }
