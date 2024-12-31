@@ -3,6 +3,7 @@
 package fr.o80.testcompose.screen.bottomsheet.component.behavior
 
 import androidx.compose.animation.core.SpringSpec
+import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
@@ -22,10 +23,14 @@ fun rememberHeaderFooterFirstBehavior(
     val positionalThreshold = remember(density) { with(density) { 40.dp.toPx() } }
     val velocityThreshold = remember(density) { with(density) { 125.dp.toPx() } }
 
+    val snapAnimationSpec = remember { SpringSpec<Float>() }
+    val decayAnimationSpec = rememberSplineBasedDecay<Float>()
+
     val draggableState = rememberSaveable(
         initialState,
         saver = AnchoredDraggableState.Saver(
-            animationSpec = SpringSpec(),
+            snapAnimationSpec = snapAnimationSpec,
+            decayAnimationSpec = decayAnimationSpec,
             positionalThreshold = { positionalThreshold },
             velocityThreshold = { velocityThreshold }
         )
@@ -35,7 +40,8 @@ fun rememberHeaderFooterFirstBehavior(
             anchors = DraggableAnchors { /* No anchors at init */ },
             positionalThreshold = { positionalThreshold },
             velocityThreshold = { velocityThreshold },
-            animationSpec = SpringSpec()
+            snapAnimationSpec = snapAnimationSpec,
+            decayAnimationSpec = decayAnimationSpec
         )
     }
 

@@ -13,37 +13,42 @@ import fr.o80.testcompose.screen.twoTopAppBar.TwoTopAppBarScreen
 import fr.o80.testcompose.screen.unlockcircle.UnlockCircleScreen
 import fr.o80.testcompose.screen.wave.WavesBackground
 
+fun interface Rendering {
+    @Composable
+    fun Render(modifier: Modifier, onClose: () -> Unit)
+}
+
 enum class Screen(
     val label: String,
-    val render: @Composable (modifier: Modifier, onClose: () -> Unit) -> Unit
+    val rendering: Rendering
 ) {
     APPEARING_APP_BAR(
         label = "Appearing App Bar",
-        render = { modifier, onClose -> AppearingAppBarScreen(modifier, onClose) }
+        rendering = { modifier, onClose -> AppearingAppBarScreen(modifier, onClose) }
     ),
     SINGLE_TOP_APP_BAR(
         label = "Single Top App Bar",
-        render = { modifier, onClose -> SingleTopAppBarScreen(modifier, onClose) }
+        rendering = { modifier, onClose -> SingleTopAppBarScreen(modifier, onClose) }
     ),
     TWO_TOP_APP_BAR(
         label = "Two Top App Bar",
-        render = { modifier, onClose -> TwoTopAppBarScreen(modifier, onClose) }
+        rendering = { modifier, onClose -> TwoTopAppBarScreen(modifier, onClose) }
     ),
     LOCK_CIRCLE(
         label = "Lock Circle",
-        render = { modifier, onClose -> UnlockCircleScreen(modifier, onClose) }
+        rendering = { modifier, onClose -> UnlockCircleScreen(modifier, onClose) }
     ),
     PUSHED_FOOTER(
         label = "Pushed Footer",
-        render = { modifier, onClose -> PushedFooterScreen(modifier, onClose) }
+        rendering = { modifier, onClose -> PushedFooterScreen(modifier, onClose) }
     ),
     SHAKER(
         label = "Shaker",
-        render = { modifier, onClose -> ShakerScreen(modifier, onClose) }
+        rendering = { modifier, onClose -> ShakerScreen(modifier, onClose) }
     ),
     WAVE_BACKGROUND(
         label = "Wave Background",
-        render = { modifier, onClose ->
+        rendering = { modifier, onClose ->
             ScreenWrapper(
                 WAVE_BACKGROUND.label,
                 modifier,
@@ -53,7 +58,7 @@ enum class Screen(
     ),
     PACMAN(
         label = "Pacman",
-        render = { modifier, onClose ->
+        rendering = { modifier, onClose ->
             ScreenWrapper(
                 PACMAN.label,
                 modifier,
@@ -63,7 +68,7 @@ enum class Screen(
     ),
     BOTTOM_SHEET(
         label = "Bottom Sheet",
-        render = { modifier, onClose ->
+        rendering = { modifier, onClose ->
             ScreenWrapper(
                 BOTTOM_SHEET.label,
                 modifier,

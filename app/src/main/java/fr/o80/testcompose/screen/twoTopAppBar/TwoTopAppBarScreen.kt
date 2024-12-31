@@ -61,7 +61,7 @@ fun TwoTopAppBarScreen(
                             modifier = Modifier.fillMaxWidth(),
                             title = {},
                             navigationIcon = { CloseIcon(onClick = onClose) },
-                            colors = TopAppBarDefaults.smallTopAppBarColors(
+                            colors = TopAppBarDefaults.topAppBarColors(
                                 containerColor = Color.Transparent
                             )
                         )
