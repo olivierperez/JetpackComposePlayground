@@ -3,6 +3,8 @@ package fr.o80.testcompose.screen.bottombar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,11 +45,14 @@ fun BottomBar(
     elevation: Dp = BottomBarDefaults.elevation,
     fabPadding: Dp = BottomBarDefaults.fabPadding,
     contentPadding: PaddingValues = BottomBarDefaults.contentPadding,
+    windowInsets: WindowInsets = BottomBarDefaults.windowInsets,
     content: @Composable BottomBarScope.() -> Unit
 ) {
     val direction = LocalLayoutDirection.current
     val density = LocalDensity.current
     val shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+    val totalPadding = contentPadding + windowInsets.asPaddingValues(density)
+
     Layout(
         modifier = modifier
             .shadow(elevation, clip = false)
@@ -62,16 +67,16 @@ fun BottomBar(
             val startPlaceables = contentPlaceables.take(startCount)
             val endPlaceables = contentPlaceables.drop(startCount)
 
-            val topPadding = contentPadding.calculateTopPadding().toIntPx(density)
-            val bottomPadding = contentPadding.calculateBottomPadding().toIntPx(density)
+            val topPadding = totalPadding.calculateTopPadding().toIntPx(density)
+            val bottomPadding = totalPadding.calculateBottomPadding().toIntPx(density)
 
             val width = constraints.maxWidth
             val height =
                 (contentPlaceables.maxOfOrNull { it.height } ?: 16) + topPadding + bottomPadding
 
             val fabPaddingPx = fabPadding.toIntPx(density)
-            val startPaddingPx = contentPadding.calculateStartPadding(direction).toIntPx(density)
-            val endPaddingPx = contentPadding.calculateEndPadding(direction).toIntPx(density)
+            val startPaddingPx = totalPadding.calculateStartPadding(direction).toIntPx(density)
+            val endPaddingPx = totalPadding.calculateEndPadding(direction).toIntPx(density)
 
             val startWidth = (width / 2) - (fabPlaceable.width / 2) - startPaddingPx - fabPaddingPx
             val startWidths = startPlaceables.sumOf { it.width }
@@ -160,4 +165,15 @@ private fun BottomBarPreview() {
             }
         }
     }
+}
+
+@Composable
+private operator fun PaddingValues.plus(other: PaddingValues): PaddingValues {
+    val direction = LocalLayoutDirection.current
+    return PaddingValues(
+        top = calculateTopPadding() + other.calculateTopPadding(),
+        end = calculateEndPadding(direction) + other.calculateEndPadding(direction),
+        bottom = calculateBottomPadding() + other.calculateBottomPadding(),
+        start = calculateStartPadding(direction) + other.calculateStartPadding(direction)
+    )
 }
