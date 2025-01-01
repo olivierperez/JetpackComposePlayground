@@ -16,7 +16,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,10 +39,10 @@ class BottomBarScope
 fun BottomBar(
     fab: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceContainer,
-    elevation: Dp = 6.dp,
-    fabPadding: Dp = 8.dp,
-    contentPadding: PaddingValues = PaddingValues(8.dp),
+    containerColor: Color = BottomBarDefaults.containerColor,
+    elevation: Dp = BottomBarDefaults.elevation,
+    fabPadding: Dp = BottomBarDefaults.fabPadding,
+    contentPadding: PaddingValues = BottomBarDefaults.contentPadding,
     content: @Composable BottomBarScope.() -> Unit
 ) {
     val direction = LocalLayoutDirection.current
@@ -76,12 +75,12 @@ fun BottomBar(
 
             val startWidth = (width / 2) - (fabPlaceable.width / 2) - startPaddingPx - fabPaddingPx
             val startWidths = startPlaceables.sumOf { it.width }
-            val startSpace = (startWidth - startWidths) / (startCount + 1)
+            val startSpace = ((startWidth - startWidths) / (startCount + 1)).coerceAtLeast(0)
 
             val endStart = (width / 2) + (fabPlaceable.width / 2) + fabPaddingPx
             val endWidth = (width / 2) - (fabPlaceable.width / 2) - endPaddingPx - fabPaddingPx
             val endWidths = endPlaceables.sumOf { it.width }
-            val endSpace = (endWidth - endWidths) / (endCount + 1)
+            val endSpace = ((endWidth - endWidths) / (endCount + 1)).coerceAtLeast(0)
 
             val heightCenter = topPadding + (height - bottomPadding - topPadding) / 2
 
