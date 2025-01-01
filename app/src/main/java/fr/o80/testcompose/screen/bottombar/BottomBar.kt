@@ -18,7 +18,10 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -42,6 +45,7 @@ fun BottomBar(
     fab: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     containerColor: Color = BottomBarDefaults.containerColor,
+    contentColor: Color = contentColorFor(containerColor),
     elevation: Dp = BottomBarDefaults.elevation,
     fabPadding: Dp = BottomBarDefaults.fabPadding,
     contentPadding: PaddingValues = BottomBarDefaults.contentPadding,
@@ -53,70 +57,73 @@ fun BottomBar(
     val shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
     val totalPadding = contentPadding + windowInsets.asPaddingValues(density)
 
-    Layout(
-        modifier = modifier
-            .shadow(elevation, clip = false)
-            .background(containerColor, shape),
-        measurePolicy = { measurables, constraints ->
-            val fabPlaceable = measurables[0].measure(Constraints())
-            val contentPlaceables = measurables.drop(1).map {
-                it.measure(constraints.copy(minWidth = 0))
+    CompositionLocalProvider(LocalContentColor provides contentColor) {
+        Layout(
+            modifier = modifier
+                .shadow(elevation, clip = false)
+                .background(containerColor, shape),
+            measurePolicy = { measurables, constraints ->
+                val fabPlaceable = measurables[0].measure(Constraints())
+                val contentPlaceables = measurables.drop(1).map {
+                    it.measure(constraints.copy(minWidth = 0))
+                }
+                val startCount = ceil(contentPlaceables.size / 2f).toInt()
+                val endCount = contentPlaceables.size - startCount
+                val startPlaceables = contentPlaceables.take(startCount)
+                val endPlaceables = contentPlaceables.drop(startCount)
+
+                val topPadding = totalPadding.calculateTopPadding().toIntPx(density)
+                val bottomPadding = totalPadding.calculateBottomPadding().toIntPx(density)
+
+                val width = constraints.maxWidth
+                val height =
+                    (contentPlaceables.maxOfOrNull { it.height } ?: 16) + topPadding + bottomPadding
+
+                val fabPaddingPx = fabPadding.toIntPx(density)
+                val startPaddingPx = totalPadding.calculateStartPadding(direction).toIntPx(density)
+                val endPaddingPx = totalPadding.calculateEndPadding(direction).toIntPx(density)
+
+                val startWidth =
+                    (width / 2) - (fabPlaceable.width / 2) - startPaddingPx - fabPaddingPx
+                val startWidths = startPlaceables.sumOf { it.width }
+                val startSpace = ((startWidth - startWidths) / (startCount + 1)).coerceAtLeast(0)
+
+                val endStart = (width / 2) + (fabPlaceable.width / 2) + fabPaddingPx
+                val endWidth = (width / 2) - (fabPlaceable.width / 2) - endPaddingPx - fabPaddingPx
+                val endWidths = endPlaceables.sumOf { it.width }
+                val endSpace = ((endWidth - endWidths) / (endCount + 1)).coerceAtLeast(0)
+
+                val heightCenter = topPadding + (height - bottomPadding - topPadding) / 2
+
+                layout(width, height) {
+                    fabPlaceable.place(
+                        (width / 2) - (fabPlaceable.width / 2),
+                        fabPlaceable.height / -2
+                    )
+
+                    placeItems(
+                        placeables = startPlaceables,
+                        start = startPaddingPx + startSpace,
+                        space = startSpace,
+                        heightCenter = heightCenter
+                    )
+
+                    placeItems(
+                        placeables = endPlaceables,
+                        start = endStart + endSpace,
+                        space = endSpace,
+                        heightCenter = heightCenter
+                    )
+                }
+            },
+            content = {
+                fab()
+                with(BottomBarScope()) {
+                    content()
+                }
             }
-            val startCount = ceil(contentPlaceables.size / 2f).toInt()
-            val endCount = contentPlaceables.size - startCount
-            val startPlaceables = contentPlaceables.take(startCount)
-            val endPlaceables = contentPlaceables.drop(startCount)
-
-            val topPadding = totalPadding.calculateTopPadding().toIntPx(density)
-            val bottomPadding = totalPadding.calculateBottomPadding().toIntPx(density)
-
-            val width = constraints.maxWidth
-            val height =
-                (contentPlaceables.maxOfOrNull { it.height } ?: 16) + topPadding + bottomPadding
-
-            val fabPaddingPx = fabPadding.toIntPx(density)
-            val startPaddingPx = totalPadding.calculateStartPadding(direction).toIntPx(density)
-            val endPaddingPx = totalPadding.calculateEndPadding(direction).toIntPx(density)
-
-            val startWidth = (width / 2) - (fabPlaceable.width / 2) - startPaddingPx - fabPaddingPx
-            val startWidths = startPlaceables.sumOf { it.width }
-            val startSpace = ((startWidth - startWidths) / (startCount + 1)).coerceAtLeast(0)
-
-            val endStart = (width / 2) + (fabPlaceable.width / 2) + fabPaddingPx
-            val endWidth = (width / 2) - (fabPlaceable.width / 2) - endPaddingPx - fabPaddingPx
-            val endWidths = endPlaceables.sumOf { it.width }
-            val endSpace = ((endWidth - endWidths) / (endCount + 1)).coerceAtLeast(0)
-
-            val heightCenter = topPadding + (height - bottomPadding - topPadding) / 2
-
-            layout(width, height) {
-                fabPlaceable.place(
-                    (width / 2) - (fabPlaceable.width / 2),
-                    fabPlaceable.height / -2
-                )
-
-                placeItems(
-                    placeables = startPlaceables,
-                    start = startPaddingPx + startSpace,
-                    space = startSpace,
-                    heightCenter = heightCenter
-                )
-
-                placeItems(
-                    placeables = endPlaceables,
-                    start = endStart + endSpace,
-                    space = endSpace,
-                    heightCenter = heightCenter
-                )
-            }
-        },
-        content = {
-            fab()
-            with(BottomBarScope()) {
-                content()
-            }
-        }
-    )
+        )
+    }
 }
 
 private fun Placeable.PlacementScope.placeItems(
