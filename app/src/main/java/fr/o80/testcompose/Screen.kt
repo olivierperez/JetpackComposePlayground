@@ -25,31 +25,31 @@ enum class Screen(
 ) {
     APPEARING_APP_BAR(
         label = "Appearing App Bar",
-        rendering = { modifier, onClose -> AppearingAppBarScreen(modifier, onClose) }
+        rendering = Rendering { modifier, onClose -> AppearingAppBarScreen(modifier, onClose) }
     ),
     SINGLE_TOP_APP_BAR(
         label = "Single Top App Bar",
-        rendering = { modifier, onClose -> SingleTopAppBarScreen(modifier, onClose) }
+        rendering = Rendering { modifier, onClose -> SingleTopAppBarScreen(modifier, onClose) }
     ),
     TWO_TOP_APP_BAR(
         label = "Two Top App Bar",
-        rendering = { modifier, onClose -> TwoTopAppBarScreen(modifier, onClose) }
+        rendering = Rendering { modifier, onClose -> TwoTopAppBarScreen(modifier, onClose) }
     ),
     LOCK_CIRCLE(
         label = "Lock Circle",
-        rendering = { modifier, onClose -> UnlockCircleScreen(modifier, onClose) }
+        rendering = Rendering { modifier, onClose -> UnlockCircleScreen(modifier, onClose) }
     ),
     PUSHED_FOOTER(
         label = "Pushed Footer",
-        rendering = { modifier, onClose -> PushedFooterScreen(modifier, onClose) }
+        rendering = Rendering { modifier, onClose -> PushedFooterScreen(modifier, onClose) }
     ),
     SHAKER(
         label = "Shaker",
-        rendering = { modifier, onClose -> ShakerScreen(modifier, onClose) }
+        rendering = Rendering { modifier, onClose -> ShakerScreen(modifier, onClose) }
     ),
     WAVE_BACKGROUND(
         label = "Wave Background",
-        rendering = { modifier, onClose ->
+        rendering = Rendering { modifier, onClose ->
             ScreenWrapper(
                 WAVE_BACKGROUND.label,
                 modifier,
@@ -59,7 +59,7 @@ enum class Screen(
     ),
     PACMAN(
         label = "Pacman",
-        rendering = { modifier, onClose ->
+        rendering = Rendering { modifier, onClose ->
             ScreenWrapper(
                 PACMAN.label,
                 modifier,
@@ -69,7 +69,7 @@ enum class Screen(
     ),
     BOTTOM_SHEET(
         label = "Bottom Sheet",
-        rendering = { modifier, onClose ->
+        rendering = Rendering { modifier, onClose ->
             ScreenWrapper(
                 BOTTOM_SHEET.label,
                 modifier,
@@ -79,7 +79,7 @@ enum class Screen(
     ),
     BOTTOM_BAR(
         label = "Bottom Bar",
-        rendering = {modifier, onClose ->
+        rendering = Rendering { modifier, onClose ->
             ScreenWrapper(
                 BOTTOM_BAR.label,
                 modifier,

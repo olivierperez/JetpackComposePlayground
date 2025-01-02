@@ -3,6 +3,7 @@ package fr.o80.testcompose.screen.bottombar
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +36,8 @@ fun BottomBarScreen(
     Scaffold(
         modifier = modifier
             .fillMaxSize(),
+        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+        topBar = { Spacer(Modifier) },
         bottomBar = {
             BottomBar(
                 modifier = Modifier
@@ -62,10 +66,12 @@ fun BottomBarScreen(
         }
     ) { paddingValues ->
         Box(
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
         ) {
             Text(
-                text = "Le contenu",
+                text = "Some content",
                 modifier = Modifier.align(Alignment.Center)
             )
         }
