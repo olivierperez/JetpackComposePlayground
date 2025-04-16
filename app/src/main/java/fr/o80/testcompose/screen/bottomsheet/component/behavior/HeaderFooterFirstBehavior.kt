@@ -17,7 +17,7 @@ import fr.o80.testcompose.screen.bottomsheet.component.BottomSheetBehavior
 
 @Composable
 fun rememberHeaderFooterFirstBehavior(
-    initialState: HeaderFooterFirsState
+    initialState: HeaderFooterFirstState
 ): HeaderFooterFirstBehavior {
     val density = LocalDensity.current
     val positionalThreshold = remember(density) { with(density) { 40.dp.toPx() } }
@@ -53,15 +53,15 @@ fun rememberHeaderFooterFirstBehavior(
 }
 
 class HeaderFooterFirstBehavior(
-    override val anchoredDraggableState: AnchoredDraggableState<HeaderFooterFirsState>
-) : BottomSheetBehavior<HeaderFooterFirsState> {
+    override val anchoredDraggableState: AnchoredDraggableState<HeaderFooterFirstState>
+) : BottomSheetBehavior<HeaderFooterFirstState> {
     override fun updateHeights(headerHeight: Int, contentHeight: Int, footerHeight: Int) {
         val fullHeight = headerHeight + contentHeight + footerHeight
         anchoredDraggableState.updateAnchors(
             DraggableAnchors {
-                HeaderFooterFirsState.Full at 0f
-                HeaderFooterFirsState.HeaderFooter at contentHeight.toFloat()
-                HeaderFooterFirsState.Header at (fullHeight - headerHeight).toFloat()
+                HeaderFooterFirstState.Full at 0f
+                HeaderFooterFirstState.HeaderFooter at contentHeight.toFloat()
+                HeaderFooterFirstState.Header at (fullHeight - headerHeight).toFloat()
             }
         )
     }
@@ -80,7 +80,7 @@ class HeaderFooterFirstBehavior(
     }
 }
 
-enum class HeaderFooterFirsState {
+enum class HeaderFooterFirstState {
     Header,
     HeaderFooter,
     Full
