@@ -13,13 +13,16 @@ import kotlin.math.sin
 import kotlin.reflect.KFunction4
 
 fun Modifier.wavesBackground(
-    colors: List<Color>,
-    waveColors: Color,
+    colors: List<Color> = listOf(
+        Color(0xff4A148C),
+        Color(0xff7B1FA2)
+    ),
+    waveColors: Color = Color.White.copy(alpha = .1f),
     intensity1: Float = .05f,
     intensity2: Float = .1f,
     iterations: Float = 2f,
 ): Modifier {
-    return this then drawWithCache {
+    return this.drawWithCache {
         val gradientBrush = Brush.linearGradient(
             colors = colors,
             start = Offset(0f, size.height),
