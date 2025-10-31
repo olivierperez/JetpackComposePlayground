@@ -7,6 +7,7 @@ import fr.o80.testcompose.screen.appearingtopbar.AppearingAppBarScreen
 import fr.o80.testcompose.screen.async.AsyncContentLoaderScreen
 import fr.o80.testcompose.screen.bottombar.BottomBarScreen
 import fr.o80.testcompose.screen.bottomsheet.BottomSheetScreen
+import fr.o80.testcompose.screen.brush.HalfColorScreen
 import fr.o80.testcompose.screen.pacman.Pacmans
 import fr.o80.testcompose.screen.pushedfooter.PushedFooterScreen
 import fr.o80.testcompose.screen.shaker.ShakerScreen
@@ -36,6 +37,16 @@ enum class Screen(
                 modifier,
                 onClose
             ) { AsyncContentLoaderScreen() }
+        }
+    ),
+    HALF_COLOR_BRUSH(
+        label = "Half Color Brush",
+        rendering = Rendering { modifier, onClose ->
+            ScreenWrapper(
+                HALF_COLOR_BRUSH.label,
+                modifier,
+                onClose
+            ) { HalfColorScreen() }
         }
     ),
     SINGLE_TOP_APP_BAR(
