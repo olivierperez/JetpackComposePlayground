@@ -9,6 +9,7 @@ import fr.o80.testcompose.screen.bottombar.BottomBarScreen
 import fr.o80.testcompose.screen.bottomsheet.BottomSheetScreen
 import fr.o80.testcompose.screen.brush.HalfColorScreen
 import fr.o80.testcompose.screen.pacman.Pacmans
+import fr.o80.testcompose.screen.placeholder.PlaceholderScreen
 import fr.o80.testcompose.screen.pushedfooter.PushedFooterScreen
 import fr.o80.testcompose.screen.shaker.ShakerScreen
 import fr.o80.testcompose.screen.singleTopAppBar.SingleTopAppBarScreen
@@ -47,6 +48,16 @@ enum class Screen(
                 modifier,
                 onClose
             ) { HalfColorScreen() }
+        }
+    ),
+    PLACEHOLDER(
+        label = "Placeholder",
+        rendering = Rendering { modifier, onClose ->
+            ScreenWrapper(
+                PLACEHOLDER.label,
+                modifier,
+                onClose
+            ) { PlaceholderScreen() }
         }
     ),
     SINGLE_TOP_APP_BAR(
