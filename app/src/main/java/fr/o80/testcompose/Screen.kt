@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import fr.o80.testcompose.screen.ScreenWrapper
 import fr.o80.testcompose.screen.appearingtopbar.AppearingAppBarScreen
+import fr.o80.testcompose.screen.async.AsyncContentLoaderScreen
 import fr.o80.testcompose.screen.bottombar.BottomBarScreen
 import fr.o80.testcompose.screen.bottomsheet.BottomSheetScreen
 import fr.o80.testcompose.screen.pacman.Pacmans
@@ -26,6 +27,16 @@ enum class Screen(
     APPEARING_APP_BAR(
         label = "Appearing App Bar",
         rendering = Rendering { modifier, onClose -> AppearingAppBarScreen(modifier, onClose) }
+    ),
+    ASYNC_CONTENT_LOADER(
+        label = "Async Content Loader",
+        rendering = Rendering { modifier, onClose ->
+            ScreenWrapper(
+                ASYNC_CONTENT_LOADER.label,
+                modifier,
+                onClose
+            ) { AsyncContentLoaderScreen() }
+        }
     ),
     SINGLE_TOP_APP_BAR(
         label = "Single Top App Bar",
