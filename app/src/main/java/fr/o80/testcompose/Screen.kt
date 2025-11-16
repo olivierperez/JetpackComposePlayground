@@ -11,6 +11,7 @@ import fr.o80.testcompose.screen.brush.HalfColorScreen
 import fr.o80.testcompose.screen.pacman.Pacmans
 import fr.o80.testcompose.screen.placeholder.PlaceholderScreen
 import fr.o80.testcompose.screen.pushedfooter.PushedFooterScreen
+import fr.o80.testcompose.screen.shader.ShaderScreen
 import fr.o80.testcompose.screen.shaker.ShakerScreen
 import fr.o80.testcompose.screen.singleTopAppBar.SingleTopAppBarScreen
 import fr.o80.testcompose.screen.twoTopAppBar.TwoTopAppBarScreen
@@ -118,6 +119,16 @@ enum class Screen(
                 modifier,
                 onClose
             ) { BottomBarScreen() }
+        }
+    ),
+    SHADER(
+        label = "Shader",
+        rendering = Rendering { modifier, onClose ->
+            ScreenWrapper(
+                SHADER.label,
+                modifier,
+                onClose
+            ) { ShaderScreen() }
         }
     )
 }
