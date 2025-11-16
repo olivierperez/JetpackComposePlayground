@@ -7,7 +7,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.translate
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.reflect.KFunction4
@@ -28,15 +27,13 @@ fun Modifier.wavesBackground(
             start = Offset(0f, size.height),
             end = Offset(size.width, 0f),
         )
-        val wave1Path = generateWave(::f1, iterations, intensity1)
-        val wave2Path = generateWave(::f2, iterations, intensity2)
+        val wave1Path = generateWave(::f1, iterations, intensity1, top = -25f)
+        val wave2Path = generateWave(::f2, iterations, intensity2, top = 75f)
 
         onDrawBehind {
             drawRect(gradientBrush)
             drawPath(wave1Path, waveColors)
-            translate(top = 50f) {
-                drawPath(wave2Path, waveColors)
-            }
+            drawPath(wave2Path, waveColors)
         }
     }
 }
@@ -44,13 +41,14 @@ fun Modifier.wavesBackground(
 private fun CacheDrawScope.generateWave(
     f: KFunction4<Int, Float, Float, Float, Float>,
     iterations: Float,
-    intensity: Float
+    intensity: Float,
+    top: Float = 0f
 ): Path {
     return Path().apply {
         moveTo(0f, size.height / 2)
         repeat(101) { i ->
             val f1 = f(i, iterations, size.height, intensity)
-            lineTo(size.width * i / 100, (size.height / 2) - f1)
+            lineTo(size.width * i / 100, top + (size.height / 2) - f1)
         }
         lineTo(size.width, size.height)
         lineTo(0f, size.height)
