@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -35,7 +34,7 @@ fun ScreenList(
                 style = MaterialTheme.typography.displaySmall,
             )
         }
-        items(Screen.values()) { screen ->
+        items(Screen.entries.sortedBy { it.label }) { screen ->
             Row(
                 Modifier
                     .fillMaxWidth()
