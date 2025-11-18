@@ -5,11 +5,11 @@ import android.graphics.Color
 import android.graphics.RenderEffect
 import android.graphics.RuntimeShader
 import android.os.Build
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -34,7 +34,6 @@ fun ShaderScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .statusBarsPadding()
     ) {
         Button(
             onClick = {},
@@ -57,9 +56,20 @@ private const val COLOR_SHADER_SRC = """
     
     uniform shader inputShader;
     
+    float strengthMultiplier = 50.0;
+    float lineHeight = 5.0;
+    
+    float rand(float2 co) {
+        return fract(sin(dot(co, float2(12.9898, 78.233))) * 43758.5453);
+    }
+    
     half4 main(float2 fragCoord) {
-        float4 pixel = inputShader.eval(fragCoord);
-        return mix(pixel, iColor, pixel.a * strength);
+        float row = floor(fragCoord.y / lineHeight) * lineHeight;
+        float offset = (rand(float2(0, row)) - 0.5) * strength * strengthMultiplier;
+        
+        float4 glitchedPixel = inputShader.eval(fragCoord + float2(offset, 0))
+        
+        return glitchedPixel;
     }
 """
 
@@ -76,14 +86,14 @@ private fun Modifier.glitch(): Modifier {
             animator.duration = duration.toLong()
             animator.repeatMode = ValueAnimator.REVERSE
             animator.repeatCount = ValueAnimator.INFINITE
-            animator.interpolator = LinearInterpolator()
+            animator.interpolator = AccelerateInterpolator(4f)
             animator.addUpdateListener { animation ->
                 strength = animation.animatedValue as Float
             }
             animator.start()
         }
 
-        this then graphicsLayer {
+        this.graphicsLayer {
             renderEffect = RenderEffect
                 .createRuntimeShaderEffect(shader, "inputShader")
                 .also {
