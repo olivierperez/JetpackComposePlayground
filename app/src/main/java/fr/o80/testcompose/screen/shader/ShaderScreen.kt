@@ -6,7 +6,6 @@ import android.graphics.RenderEffect
 import android.graphics.RuntimeShader
 import android.os.Build
 import android.view.animation.AccelerateInterpolator
-import android.view.animation.LinearInterpolator
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -57,19 +56,35 @@ private const val COLOR_SHADER_SRC = """
     uniform shader inputShader;
     
     float strengthMultiplier = 50.0;
+    float aberrationMultiplier = 10.0;
     float lineHeight = 5.0;
     
     float rand(float2 co) {
         return fract(sin(dot(co, float2(12.9898, 78.233))) * 43758.5453);
     }
     
-    half4 main(float2 fragCoord) {
+    float2 displacement(float2 fragCoord) {
         float row = floor(fragCoord.y / lineHeight) * lineHeight;
         float offset = (rand(float2(0, row)) - 0.5) * strength * strengthMultiplier;
+        return float2(offset, 0);
+    }
+    
+    half4 main(float2 fragCoord) {
+        // Compute displacement
         
-        float4 glitchedPixel = inputShader.eval(fragCoord + float2(offset, 0))
+        float2 offset = displacement(fragCoord);
         
-        return glitchedPixel;
+        // Compute chromatic aberration
+
+        float aberration = strength * aberrationMultiplier;
+        float2 redOffset = float2(aberration, 0.0);
+        float2 blueOffset = float2(-aberration, 0.0);
+        
+        float red = inputShader.eval(fragCoord + offset + redOffset).r;
+        float green = inputShader.eval(fragCoord + offset).g;
+        float blue = inputShader.eval(fragCoord + offset + blueOffset).b;
+        
+        return half4(red, green, blue, inputShader.eval(fragCoord + offset).a);
     }
 """
 
