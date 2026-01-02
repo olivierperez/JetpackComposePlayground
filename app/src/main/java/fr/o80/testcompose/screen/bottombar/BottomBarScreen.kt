@@ -7,12 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,6 +18,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import fr.o80.testcompose.ui.icon.Add
+import fr.o80.testcompose.ui.icon.Build
+import fr.o80.testcompose.ui.icon.DateRange
+import fr.o80.testcompose.ui.icon.Icons
+import fr.o80.testcompose.ui.icon.Person
+import fr.o80.testcompose.ui.icon.Star
 
 @Composable
 fun BottomBarScreen(
@@ -44,23 +44,23 @@ fun BottomBarScreen(
                     .fillMaxWidth(),
                 fab = {
                     FloatingActionButton(onClick = { toast("Floating Action Button") }) {
-                        Icon(Icons.Default.Add, contentDescription = null)
+                        Icon(Icons.Add, contentDescription = null)
                     }
                 },
                 fabPadding = 0.dp,
                 contentPadding = PaddingValues(horizontal = 0.dp, vertical = 8.dp)
             ) {
                 IconButton(onClick = { toast("Calendar") }) {
-                    Icon(Icons.Default.DateRange, contentDescription = null)
+                    Icon(Icons.DateRange, contentDescription = null)
                 }
                 IconButton(onClick = { toast("Build") }) {
-                    Icon(Icons.Default.Build, contentDescription = null)
+                    Icon(Icons.Build, contentDescription = null)
                 }
                 IconButton(onClick = { toast("Favorites") }) {
-                    Icon(Icons.Default.Star, contentDescription = null)
+                    Icon(Icons.Star, contentDescription = null)
                 }
                 IconButton(onClick = { toast("Person") }) {
-                    Icon(Icons.Default.Person, contentDescription = null)
+                    Icon(Icons.Person, contentDescription = null)
                 }
             }
         }

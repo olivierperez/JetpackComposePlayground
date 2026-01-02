@@ -10,11 +10,6 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,6 +30,11 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import fr.o80.testcompose.ui.icon.Add
+import fr.o80.testcompose.ui.icon.Build
+import fr.o80.testcompose.ui.icon.DateRange
+import fr.o80.testcompose.ui.icon.Icons
+import fr.o80.testcompose.ui.icon.Person
 import fr.o80.testcompose.ui.theme.TestComposeCanvasTheme
 import kotlin.math.ceil
 
@@ -156,18 +156,18 @@ private fun BottomBarPreview() {
                     .fillMaxWidth(),
                 fab = {
                     FloatingActionButton(onClick = {}) {
-                        Icon(Icons.Default.Add, contentDescription = null)
+                        Icon(Icons.Add, contentDescription = null)
                     }
                 }
             ) {
                 IconButton(onClick = {}) {
-                    Icon(Icons.Default.DateRange, contentDescription = null)
+                    Icon(Icons.DateRange, contentDescription = null)
                 }
                 IconButton(onClick = {}) {
-                    Icon(Icons.Default.Build, contentDescription = null)
+                    Icon(Icons.Build, contentDescription = null)
                 }
                 IconButton(onClick = {}) {
-                    Icon(Icons.Default.Person, contentDescription = null)
+                    Icon(Icons.Person, contentDescription = null)
                 }
             }
         }

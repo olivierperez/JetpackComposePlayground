@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import fr.o80.testcompose.Screen
+import fr.o80.testcompose.ui.icon.ArrowForward
+import fr.o80.testcompose.ui.icon.Icons
 import fr.o80.testcompose.ui.theme.TestComposeCanvasTheme
 
 @Composable
@@ -46,7 +46,7 @@ fun ScreenList(
                     modifier = Modifier.weight(1f),
                     text = screen.label
                 )
-                Icon(Icons.AutoMirrored.Default.ArrowForward, contentDescription = null)
+                Icon(Icons.ArrowForward, contentDescription = null)
             }
         }
     }
