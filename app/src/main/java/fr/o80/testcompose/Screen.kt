@@ -11,6 +11,7 @@ import fr.o80.testcompose.screen.brush.HalfColorScreen
 import fr.o80.testcompose.screen.pacman.Pacmans
 import fr.o80.testcompose.screen.placeholder.PlaceholderScreen
 import fr.o80.testcompose.screen.pushedfooter.PushedFooterScreen
+import fr.o80.testcompose.screen.recomposition.RecompositionCount
 import fr.o80.testcompose.screen.shader.ShaderScreen
 import fr.o80.testcompose.screen.shaker.ShakerScreen
 import fr.o80.testcompose.screen.singleTopAppBar.SingleTopAppBarScreen
@@ -59,6 +60,16 @@ enum class Screen(
                 modifier,
                 onClose
             ) { PlaceholderScreen() }
+        }
+    ),
+    RECOMPOSITION_COUNT(
+        label = "Recomposition Count",
+        rendering = Rendering { modifier, onClose ->
+            ScreenWrapper(
+                RECOMPOSITION_COUNT.label,
+                modifier,
+                onClose
+            ) { RecompositionCount() }
         }
     ),
     SINGLE_TOP_APP_BAR(
